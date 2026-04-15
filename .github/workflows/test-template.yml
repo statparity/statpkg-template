@@ -1,0 +1,120 @@
+name: Test Template
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-cookiecutter:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        license: ["Apache-2.0", "MIT", "BSD-3-Clause", "GPL-3.0"]
+        include-validation: ["yes", "no"]
+        include-benchmarks: ["yes", "no"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install cookiecutter uv
+      - name: Generate project from template
+        run: |
+          cookiecutter . --no-input \
+            project_name="Test Project" \
+            project_slug="test_project" \
+            package_name="test_project" \
+            project_short_description="Test description" \
+            version="0.1.0" \
+            license="${{ matrix.license }}" \
+            author_name="Test Author" \
+            author_email="test@example.com" \
+            github_username="testuser" \
+            cran_task_view="None" \
+            include_joss_paper="yes" \
+            include_validation="${{ matrix.include-validation }}" \
+            include_benchmarks="${{ matrix.include-benchmarks }}"
+      - name: Check generated structure
+        run: |
+          cd test_project
+          test -d src/test_project
+          test -f pyproject.toml
+          test -f README.md
+          test -f LICENSE
+          test -d tests
+          test -d docs
+          test -f .github/workflows/ci.yml
+          test -f .github/workflows/release.yml
+      - name: Install and test generated project
+        run: |
+          cd test_project
+          uv pip install -e ".[dev]"
+          pytest
+      - name: Run linting on generated project
+        run: |
+          cd test_project
+          ruff check src/ tests/
+          ruff format --check src/ tests/
+          mypy src/
+
+  test-template-variations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install cookiecutter uv
+      - name: Test all CRAN Task View options
+        run: |
+          for task_view in "None" "MachineLearning" "Survival" "TimeSeries" "Bayesian" "Econometrics" "Spatial" "Robust" "ClinicalTrials"; do
+            echo "Testing CRAN Task View: $task_view"
+            rm -rf test_project
+            cookiecutter . --no-input \
+              project_name="Test Project" \
+              project_slug="test_project" \
+              package_name="test_project" \
+              project_short_description="Test" \
+              version="0.1.0" \
+              license="Apache-2.0" \
+              author_name="Test" \
+              author_email="test@example.com" \
+              github_username="test" \
+              cran_task_view="$task_view" \
+              include_joss_paper="yes" \
+              include_validation="yes" \
+              include_benchmarks="yes"
+            test -d test_project
+            cat test_project/pyproject.toml | grep -q "keywords.*statistics"
+          done
+      - name: Test JOSS paper generation
+        run: |
+          rm -rf test_project
+          cookiecutter . --no-input \
+            project_name="Test Project" \
+            project_slug="test_project" \
+            package_name="test_project" \
+            project_short_description="Test" \
+            version="0.1.0" \
+            license="Apache-2.0" \
+            author_name="Test" \
+            author_email="test@example.com" \
+            github_username="test" \
+            cran_task_view="None" \
+            include_joss_paper="yes" \
+            include_validation="no" \
+            include_benchmarks="no"
+          test -d test_project/paper
+          test -f test_project/paper/paper.md || test -f test_project/paper/.gitkeep
+
+  validate-json:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate cookiecutter.json
+        run: python -c "import json; json.load(open('cookiecutter.json'))"

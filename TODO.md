@@ -7,15 +7,15 @@
 ## Phase 0 — Setup
 - [x] 0.1 Initialize cookiecutter repo (`uv init statpkg-template`)
 - [x] 0.2 Add `LICENSE` (Apache-2.0)
-- [ ] 0.3 CI: test template generation end-to-end on cookiecutter
+- [x] 0.3 CI: test template generation end-to-end on cookiecutter
 
 ## v0.1.0 — Base Template
-- [ ] 1.1 `cookiecutter.json` with all prompts (project name, license, CRAN Task View, JOSS flag)
-- [ ] 1.2 `src/` layout generation with `uv`-native `pyproject.toml`
-- [ ] 1.3 GitHub Actions CI template (lint → typecheck → test matrix)
-- [ ] 1.4 GitHub Actions release template (tag `v*` → PyPI publish)
-- [ ] 1.5 MkDocs + mkdocstrings site template
-- [ ] 1.6 `CHANGELOG.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md` templates
+- [x] 1.1 `cookiecutter.json` with all prompts (project name, license, CRAN Task View, JOSS flag)
+- [x] 1.2 `src/` layout generation with `uv`-native `pyproject.toml`
+- [x] 1.3 GitHub Actions CI template (lint → typecheck → test matrix)
+- [x] 1.4 GitHub Actions release template (tag `v*` → PyPI publish)
+- [x] 1.5 MkDocs + mkdocstrings site template
+- [x] 1.6 `CHANGELOG.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md` templates
 
 ## v0.2.0 — Validation Scaffold
 - [ ] 2.1 `validation/compare_r.py` — rpy2-based comparison scaffold
