@@ -1,0 +1,15 @@
+{
+  "project_name": "My Statistical Package",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "package_name": "{{ cookiecutter.project_slug }}",
+  "project_short_description": "A Python package for statistical analysis.",
+  "version": "0.1.0",
+  "license": ["Apache-2.0", "MIT", "BSD-3-Clause", "GPL-3.0"],
+  "author_name": "Your Name",
+  "author_email": "your.email@example.com",
+  "github_username": "yourusername",
+  "cran_task_view": ["None", "MachineLearning", "Survival", "TimeSeries", "Bayesian", "Econometrics", "Spatial", "Robust", "ClinicalTrials"],
+  "include_joss_paper": ["yes", "no"],
+  "include_validation": ["yes", "no"],
+  "include_benchmarks": ["yes", "no"]
+}

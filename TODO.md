@@ -5,8 +5,8 @@
 ---
 
 ## Phase 0 — Setup
-- [ ] 0.1 Initialize cookiecutter repo (`uv init statpkg-template`)
-- [ ] 0.2 Add `LICENSE` (Apache-2.0)
+- [x] 0.1 Initialize cookiecutter repo (`uv init statpkg-template`)
+- [x] 0.2 Add `LICENSE` (Apache-2.0)
 - [ ] 0.3 CI: test template generation end-to-end on cookiecutter
 
 ## v0.1.0 — Base Template
