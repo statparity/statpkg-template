@@ -18,9 +18,9 @@
 - [x] 1.6 `CHANGELOG.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md` templates
 
 ## v0.2.0 — Validation Scaffold
-- [ ] 2.1 `validation/compare_r.py` — rpy2-based comparison scaffold
-- [ ] 2.2 `validation/fixtures/` directory with README explaining fixture format
-- [ ] 2.3 Pre-commit hooks: conventional commits, ruff, mypy
+- [x] 2.1 `validation/compare_r.py` — rpy2-based comparison scaffold
+- [x] 2.2 `validation/fixtures/` directory with README explaining fixture format
+- [x] 2.3 Pre-commit hooks: conventional commits, ruff, mypy
 
 ## v0.3.0 — JOSS Paper Template
 - [ ] 3.1 `paper/paper.md` with all required JOSS sections pre-populated
