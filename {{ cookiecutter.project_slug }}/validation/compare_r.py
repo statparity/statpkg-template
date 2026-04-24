@@ -288,7 +288,7 @@ def validate_against_r(
     if fixture_name:
         fixture = comparator.load_fixture(fixture_name)
         inputs = fixture["input"]
-        expected = fixture["expected"]
+        expected = fixture.get("expected")
     else:
         # Default test with simple data
         inputs = {"data": [1, 2, 3, 4, 5]}
@@ -303,8 +303,14 @@ def validate_against_r(
         *inputs.values()
     )
 
-    # Compare
+    # Compare Python vs R
     comparator.assert_close(py_result, r_result, rtol=rtol)
+
+    # If fixture has expected values, also validate against ground truth
+    if expected is not None:
+        comparator.assert_close(py_result, expected, rtol=rtol, message="Python vs expected")
+        comparator.assert_close(r_result, expected, rtol=rtol, message="R vs expected")
+
     print(f"✓ Validation passed: {py_func.__name__} matches {r_package}::{r_function}")
 
 

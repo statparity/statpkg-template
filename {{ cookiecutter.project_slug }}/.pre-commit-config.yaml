@@ -37,8 +37,8 @@ repos:
     hooks:
       - id: pytest-check
         name: pytest-check
-        entry: pytest
-        language: system
+        entry: python -m pytest
+        language: python
         pass_filenames: false
         always_run: true
         args: ["-v", "--tb=short"]

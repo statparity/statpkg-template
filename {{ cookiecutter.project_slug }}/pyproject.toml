@@ -8,12 +8,15 @@ requires-python = ">=3.10"
 authors = [
     {name = "{{ cookiecutter.author_name }}", email = "{{ cookiecutter.author_email }}"}
 ]
-keywords = ["statistics", "{{ cookiecutter.cran_task_view.lower() }}"]
+keywords = ["statistics"{% if cookiecutter.cran_task_view != 'None' %}, "{{ cookiecutter.cran_task_view.lower() }}"{% endif %}]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: {{ cookiecutter.license.replace('-', ' :: ') }}",
-    "Programming Language :: Python :: 3",
+{% if cookiecutter.license == 'Apache-2.0' %}    "License :: OSI Approved :: Apache Software License",
+{% elif cookiecutter.license == 'MIT' %}    "License :: OSI Approved :: MIT License",
+{% elif cookiecutter.license == 'BSD-3-Clause' %}    "License :: OSI Approved :: BSD License",
+{% elif cookiecutter.license == 'GPL-3.0' %}    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+{% endif %}    "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -74,10 +77,10 @@ disallow_untyped_defs = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-v --cov=src/{{ cookiecutter.package_name }} --cov-report=term-missing"
+addopts = "-v --cov={{ cookiecutter.package_name }} --cov-report=term-missing"
 
 [tool.coverage.run]
-source = ["src/{{ cookiecutter.package_name }}"]
+source = ["{{ cookiecutter.package_name }}"]
 
 [tool.coverage.report]
 exclude_lines = [
